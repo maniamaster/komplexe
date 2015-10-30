@@ -21,7 +21,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import timeit
 
-N = 500
+N = 1000
 ON = 1
 OFF = 0
 vals = [ON, OFF]
@@ -47,7 +47,7 @@ def update(data):
 # set up animation
 fig, ax = plt.subplots()
 mat = ax.matshow(grid)
-ani = animation.FuncAnimation(fig, update, interval=50,
-                              save_count=50)
+ani = animation.FuncAnimation(fig, update, interval=40,
+                              save_count=40)
 plt.show()
 
