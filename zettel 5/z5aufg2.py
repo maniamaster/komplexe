@@ -26,8 +26,8 @@ ttrans=1000
 tlimit=20
 
 #Shinriki:
-R1min=19.
-R1max=22.
+R1min=19.0
+R1max=22.0
 C1=0.01
 C2=0.1
 L=0.32
@@ -49,9 +49,9 @@ def logistic(r,x):
 #DiffEquation:
 def Sys(t,X):
     global C1,C2,L,R1,R2,R3,RINC,a,b
-    return np.array([1/C1*(X[0]*(1/RINC-1/R1)-a*(exp(b*(X[0]-X[1]))-exp(-b*X[0]+b*X[1]))-(X[0]-X[1])/R2),
-                     1/C2*(a*(exp(b*(X[0]-X[1]))-exp(-b*X[0]+b*X[1]))+(X[0]-X[1])/R2-X[2]),
-                     1/L*(-X[2]*R3+X[1])])
+    return [1/C1*(X[0]*(1/RINC-1/R1)-a*(np.exp(b*(X[0]-X[1]))-np.exp(-b*X[0]+b*X[1]))-(X[0]-X[1])/R2),
+                     1/C2*(a*(np.exp(b*(X[0]-X[1]))-np.exp(-b*X[0]+b*X[1]))+(X[0]-X[1])/R2-X[2]),
+                     1/L*(-X[2]*R3+X[1])]
 
 
 #def array:
@@ -64,7 +64,7 @@ def integrieren(x_0,y_0,z_0,dt=0.01):
     r=spint.ode(Sys) 
     r.set_integrator('dopri5')
     r.set_initial_value([x_0,y_0,z_0])
-    X=[0,0,0]   
+    X=[0.0,0.0,0.0]
     while r.t<50:
         X=r.integrate(r.t+dt)   
     while r.t<200:     
@@ -73,14 +73,15 @@ def integrieren(x_0,y_0,z_0,dt=0.01):
         intx=np.append(intx,X[0])
         inty=np.append(inty,X[1])   
         intz=np.append(intz,X[2])        
-        if X[1]-Xbefore[1]<0 and X[1]*Xbefore[1]<0:
+        if (X[1]-Xbefore[1]<0) and (X[1]*Xbefore[1]<0):
             x1=Xbefore[1]            
             x2=X[1]
-            root=spopt.brentq(line,100,-100)
+            #root=spopt.brentq(line,100,-100)
+	    root = Xbefore[1]/(Xbefore[1]-X[1]) 
             poinx=np.append(poinx,Xbefore[0]+root*(X[0]-Xbefore[0]))
             poiny=np.append(poiny,Xbefore[1]+root*(X[1]-Xbefore[1]))  
             poinz=np.append(poinz,Xbefore[2]+root*(X[2]-Xbefore[2]))
-    return intx,inty,intz,poinx,poiny,poinz
+    #return intx,inty,intz,poinx,poiny,poinz
     
 def bifurcation():
     global array_r,array_x
@@ -97,7 +98,7 @@ def integrierenbif(x_0,y_0,z_0,dt=0.01):
     r=spint.ode(Sys) 
     r.set_integrator('dopri5')
     r.set_initial_value([x_0,y_0,z_0])
-    X=[0,0,0]   
+    X=[0.0,0.0,0.0]   
     while r.t<50:
         X=r.integrate(r.t+dt)   
     while r.t<200:     
@@ -106,7 +107,8 @@ def integrierenbif(x_0,y_0,z_0,dt=0.01):
         if X[1]-Xbefore[1]<0 and X[1]*Xbefore[1]<0:
             x1=Xbefore[1]            
             x2=X[1]
-            root=spopt.brentq(line,100,-100)
+            #root=spopt.brentq(line,100,-100)
+	    root = Xbefore[1]/(Xbefore[1]-X[1]) 
             plt.plot(R1,Xbefore[0]+root*(X[0]-Xbefore[0]),'bo',ms=0.5,linestyle='none')
     
 def bifurcation():
@@ -136,10 +138,18 @@ start = time.time() #START
 #########Bifurcation Diagram:
 
 
+<<<<<<< HEAD
 fig=plt.figure()
 R1a=linspace(R1min,R1max,100)
 for R1 in R1a:
 	integrierenbif(x_0=1,y_0=1,z_0=1)
+=======
+#fig=plt.figure()
+#R1a=np.linspace(R1min,R1max,100)
+#for R1 in R1a:
+#R1 = 20.0
+#	integrierenbif(x_0=2.0,y_0=2.0,z_0=0.2)
+>>>>>>> 5f0c79a494aaa0905c9bcda8e6b52c69dc5953b9
 
 
 ######## poincare plot:
@@ -149,11 +159,18 @@ poinz=np.array([])
 
 fig2=plt.figure()
 ax = fig2.add_subplot(111, projection='3d')
-R1=22.0
+R1=50.0
 poincare_x=np.linspace(2,-4,100)
 poincare_z=np.linspace(1,2,100)
 
-x,y,z,px,py,pz=integrieren(x_0=1,y_0=1,z_0=1)
+#x,y,z,px,py,pz = 0.0
+integrieren(x_0=1.0,y_0=1.0,z_0=0.2)
+x=intx
+y=inty
+z=intz
+px=poinx
+py=poiny
+pz=poinz
 ax.plot(xs=x,ys=y,zs=z)
 ax.scatter(xs=px,ys=py,zs=pz,color='red')
 ax.set_xlabel('V1')
