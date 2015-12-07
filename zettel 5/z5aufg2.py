@@ -9,6 +9,7 @@ import scipy.optimize as spopt
 import scipy.integrate as spint
 import matplotlib.pyplot as plt
 import numpy as np
+from pylab import *
 import time
 from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
@@ -135,10 +136,10 @@ start = time.time() #START
 #########Bifurcation Diagram:
 
 
-#fig=plt.figure()
-#R1=linspace(R1min,R1max,100)
-#for R1 in R1:
-    integrierenbif(x_0=1,y_0=1,z_0=1)
+fig=plt.figure()
+R1a=linspace(R1min,R1max,100)
+for R1 in R1a:
+	integrierenbif(x_0=1,y_0=1,z_0=1)
 
 
 ######## poincare plot:
