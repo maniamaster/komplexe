@@ -12,31 +12,46 @@ import time
 
 
 #Parameters:
-K=0.5
-iters=1000
+K=1.5
+iters=15
+
 
 #Map:
 def stand(X,K):
-    return np.array([(X[0]+X[1])%1,(X[1]+K/(2*np.pi)*np.sin(2*np.pi*(X[0]+X[1])))%2])
+    return np.array([(X[0]+X[1])%1,
+                     (X[1]+K/(2*np.pi)*np.sin(2*np.pi*(X[0]+X[1]))+1)%2-1])
+    
+def standback(X,K):
+    return np.array([(X[0]-(X[1]-K/(2*np.pi)*np.sin(2*np.pi*(X[0]))))%1,
+                     (X[1]-K/(2*np.pi)*np.sin(2*np.pi*(X[0]))+1)%2-1])
 
 def EV1(K):
-    return np.array([1,(2+K)/2+np.sqrt(K**2+4)])
+    return np.array([1,(2+K)/2.+1/2.*np.sqrt(K**2+4*K)])
 
 def EV2(K):
-    return np.array([1,(2+K)/2-np.sqrt(K**2+4)])
+    return np.array([1,(2+K)/2.-1/2.*np.sqrt(K**2+4*K)])
 
 
 start = time.time()
 ############################
-x1=0.0001*EV1(K)
-x2=0.0001*EV2(K)
-plt
-for i in range(iters):
-    x2=stand(x2,K)
-    plt.plot(x2,'b-',ms=1)
 
+fig=plt.figure()
+a=np.linspace(-10e-6,10e-6,1000)
 
+for a in a:
+    x1=a*EV1(K)
+    x2=a*EV2(K)
+    for i in range(iters):
+        x2=standback(X=x2,K=K)
+        plt.plot(x2[0],x2[1],'b.',ms=1)
+        x1=stand(X=x1,K=K)
+        plt.plot(x1[0],x1[1],'r.',ms=1)
 
+plt.xlim(0,1)
+plt.ylim(-1,1)
+plt.xlabel('x')
+plt.ylabel('p')
+plt.show()
 
 ############################
 stop = time.time()
