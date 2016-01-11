@@ -43,11 +43,11 @@ lyap=np.empty(n_omega)
 
 for t in range(0,ttrans,1):
    theta=circle(array_omega,theta,K)
-   lyap+=np.log(np.abs(1-K*np.cos(array_omega)))
+   lyap+=np.log(np.abs(1-K*np.cos(2*np.pi*theta)))
 for t in range(0,tlimit,1):
    theta=circle(array_omega,theta,K)
    plt.plot(array_omega,theta,'bo',ms=0.5,linestyle='None')  
-   lyap+=np.log(np.abs(1-K*np.cos(array_omega)))
+   lyap+=np.log(np.abs(1-K*np.cos(2*np.pi*theta)))
 
 winding=(theta-theta_in)/float(ttrans+tlimit)
 fig2=plt.figure()
