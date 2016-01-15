@@ -16,7 +16,7 @@ N=10
 stdev=0.1
 K=0.2
 timee=2000
-dt=0.1
+dt=0.5
 anzK=1000
 #K=np.linspace(0,10,100)
 
@@ -52,7 +52,7 @@ def integrieren(x_0,result,K,omega,timee,dt=0.1):
         #Rresult=np.append(Rresult,R)
     return result
 
-def Rintegrieren(x_0,Rresult,K,omega,timee,dt=0.1):
+def Rintegrieren(x_0,Rresult,K,omega,timee,dt=0.5):
     global theta,R
     r=sp.ode(Sys) 
     r.set_integrator('dopri5')
@@ -73,82 +73,129 @@ start = time.time()
 
 
 
-plt.ion()
+plt.ioff()
 Rresult=np.array([])
 
 N=10
+omega=np.empty(N)
+X=np.empty(N)
+x_0=2*np.pi*np.random.random(size=N)
+result=np.array([x_0,x_0])
+Rresult=np.array([])
+R=np.array([])
+omega=np.sort(np.random.normal(loc=1,scale=stdev,size=N))
 fig=plt.figure()
 for K in range(anzK):
-    Rresult=Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt)  
-    K=K/float(anzK)
-    plt.plot(K,Rresult,'b.')
+    R=np.append(R,Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt))    
     Rresult=np.array([])
+x=np.linspace(0,1,anzK)
+plt.plot(x,R,'b.',ms=0.8)
 plt.title('N= '+str(N)+' , stdev= '+str(stdev))
 plt.xlabel('K')
 plt.ylabel('<R>')
-plt.savefig("stddev=0.1, N={}.png".format(N),dpi=200)
+plt.savefig("stddev=0.1, N={}.png".format(N),dpi=400)
+
 
 N=100
+omega=np.empty(N)
+X=np.empty(N)
+x_0=2*np.pi*np.random.random(size=N)
+result=np.array([x_0,x_0])
+Rresult=np.array([])
+R=np.array([])
+omega=np.sort(np.random.normal(loc=1,scale=stdev,size=N))
 fig=plt.figure()
 for K in range(anzK):
-    Rresult=Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt)  
-    K=K/float(anzK)
-    plt.plot(K,Rresult,'b.')
+    R=np.append(R,Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt))    
     Rresult=np.array([])
+x=np.linspace(0,1,anzK)
+plt.plot(x,R,'b.',ms=0.8)
 plt.title('N= '+str(N)+' , stdev= '+str(stdev))
 plt.xlabel('K')
 plt.ylabel('<R>')
-plt.savefig("stddev=0.1, N={}.png".format(N),dpi=200)
+plt.savefig("stddev=0.1, N={}.png".format(N),dpi=400)
+
 
 N=1000
+omega=np.empty(N)
+X=np.empty(N)
+x_0=2*np.pi*np.random.random(size=N)
+result=np.array([x_0,x_0])
+Rresult=np.array([])
+R=np.array([])
+omega=np.sort(np.random.normal(loc=1,scale=stdev,size=N))
 fig=plt.figure()
 for K in range(anzK):
-    Rresult=Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt)  
-    K=K/float(anzK)
-    plt.plot(K,Rresult,'b.')
+    R=np.append(R,Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt))    
     Rresult=np.array([])
+x=np.linspace(0,1,anzK)
+plt.plot(x,R,'b.',ms=0.8)
 plt.title('N= '+str(N)+' , stdev= '+str(stdev))
 plt.xlabel('K')
 plt.ylabel('<R>')
-plt.savefig("stddev=0.1, N={}.png".format(N),dpi=200)
+plt.savefig("stddev=0.1, N={}.png".format(N),dpi=400)
+
 
 stdev=0.2
 
 N=10
+omega=np.empty(N)
+X=np.empty(N)
+x_0=2*np.pi*np.random.random(size=N)
+result=np.array([x_0,x_0])
+Rresult=np.array([])
+R=np.array([])
+omega=np.sort(np.random.normal(loc=1,scale=stdev,size=N))
 fig=plt.figure()
 for K in range(anzK):
-    Rresult=Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt)  
-    K=K/float(anzK)
-    plt.plot(K,Rresult,'b.')
+    R=np.append(R,Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt))    
     Rresult=np.array([])
+x=np.linspace(0,1,anzK)
+plt.plot(x,R,'b.',ms=0.8)
 plt.title('N= '+str(N)+' , stdev= '+str(stdev))
 plt.xlabel('K')
 plt.ylabel('<R>')
-plt.savefig("stddev=0.2, N={}.png".format(N),dpi=200)
+plt.savefig("stddev=0.2, N={}.png".format(N),dpi=400)
+
 
 N=100
+omega=np.empty(N)
+X=np.empty(N)
+x_0=2*np.pi*np.random.random(size=N)
+result=np.array([x_0,x_0])
+Rresult=np.array([])
+R=np.array([])
+omega=np.sort(np.random.normal(loc=1,scale=stdev,size=N))
 fig=plt.figure()
 for K in range(anzK):
-    Rresult=Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt)  
-    K=K/float(anzK)
-    plt.plot(K,Rresult,'b.')
+    R=np.append(R,Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt))    
     Rresult=np.array([])
+x=np.linspace(0,1,anzK)
+plt.plot(x,R,'b.',ms=0.8)
 plt.title('N= '+str(N)+' , stdev= '+str(stdev))
 plt.xlabel('K')
 plt.ylabel('<R>')
-plt.savefig("stddev=0.2, N={}.png".format(N),dpi=200)
+plt.savefig("stddev=0.2, N={}.png".format(N),dpi=400)
+
 
 N=1000
+omega=np.empty(N)
+X=np.empty(N)
+x_0=2*np.pi*np.random.random(size=N)
+result=np.array([x_0,x_0])
+Rresult=np.array([])
+R=np.array([])
+omega=np.sort(np.random.normal(loc=1,scale=stdev,size=N))
 fig=plt.figure()
 for K in range(anzK):
-    Rresult=Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt)  
-    K=K/float(anzK)
-    plt.plot(K,Rresult,'b.')
+    R=np.append(R,Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt))    
     Rresult=np.array([])
+x=np.linspace(0,1,anzK)
+plt.plot(x,R,'b.',ms=0.8)
 plt.title('N= '+str(N)+' , stdev= '+str(stdev))
 plt.xlabel('K')
 plt.ylabel('<R>')
-plt.savefig("stddev=0.2, N={}.png".format(N),dpi=200)
+plt.savefig("stddev=0.2, N={}.png".format(N),dpi=400)
 
 
 
