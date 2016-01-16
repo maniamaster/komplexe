@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from pylab import *
 import sys
-import time as ti
+import time
 from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
@@ -25,18 +25,20 @@ def correlation(x,N,kmax=400,plot=True):
 	c = np.zeros((kmax,3))
 	for k in range(kmax):
 		c[k] = (1.0/(x_vari*(N-k)))*np.sum((x[0:N-k]-x_mean)*(x[k:N]-x_mean),axis=0)
-	if plot:
-		plt.plot(c[:,0])
-		plt.plot(c[:,1])
-		plt.plot(c[:,2])
-		fname = "./bilder/correlation.png"
-		plt.savefig(fname,dpi=200)
+	if plot:        
+         plt.plot(c[:,0],label='x')
+         plt.plot(c[:,1],label='y')
+         plt.plot(c[:,2],label='z')
+         plt.legend()
+         fname = "./bilder/correlation.png"
+         plt.savefig(fname,dpi=200)
 		
-		#plt.show()
-		plt.close()
+#plt.show()
+plt.close()
+		
 
 def integrieren(N=1e5,dt=0.01,plot=True):
-	r = int.ode(roessmap)
+	r = int.ode(roess)
 	r.set_integrator('dopri5')
 	start = rnd.rand(3)*0.2
 	r.set_initial_value(start)
@@ -58,9 +60,9 @@ def integrieren(N=1e5,dt=0.01,plot=True):
 	return ergeb
  
 def reconstruct(N=1e5,plot=True):
-	taux	= 110
+	taux	= 150
 	tauy	= taux
-	tauz	= 30
+	tauz	= 50
 	
 	ergeb	= integrieren(N=N)
 	series_x	= ergeb[:,0]
@@ -92,3 +94,7 @@ def reconstruct(N=1e5,plot=True):
 		plt.savefig(fname, dpi=500)
 		plt.show()
 		#plt.close()
+start=time.time()
+reconstruct()
+stop = time.time()
+print stop-start,'\t'
