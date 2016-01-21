@@ -1,17 +1,10 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Nov  5 16:57:30 2015
-
-@author: eric.bertok
-"""
-
 import scipy.integrate as sp
 import matplotlib.pyplot as plt
 import numpy as np
 import time
 
 
-#Parameters:
+#Parameter:
 N=10
 stdev=0.1
 K=0.2
@@ -31,42 +24,42 @@ print result
 
 omega=np.sort(np.random.normal(loc=1,scale=stdev,size=N))
 
-#Set Diff. Equation:
-def Sys(t,X,K,omega):  
+#Set Diff. Gleichung:
+def Sys(t,X,K,omega):
     global theta,R
     return np.array(omega+K*np.sin(theta-X))
 
-#integrate and check function:
+#Integrieren
 def integrieren(x_0,result,K,omega,timee,dt=0.1):
     global theta,R
-    r=sp.ode(Sys) 
+    r=sp.ode(Sys)
     r.set_integrator('dopri5')
     r.set_f_params(K,omega)
     r.set_initial_value(x_0)
     X=x_0
     while r.t<timee:
-        theta=np.angle(1/float(N)*np.sum(np.exp(1.j*X)))  
+        theta=np.angle(1/float(N)*np.sum(np.exp(1.j*X)))
         R=np.abs(1/float(N)*np.sum(np.exp(1.j*X)))
         X=r.integrate(r.t+dt)
-        result=np.append(result,np.array([X]),axis=0)  
+        result=np.append(result,np.array([X]),axis=0)
         #Rresult=np.append(Rresult,R)
     return result
 
 def Rintegrieren(x_0,Rresult,K,omega,timee,dt=0.5):
     global theta,R
-    r=sp.ode(Sys) 
+    r=sp.ode(Sys)
     r.set_integrator('dopri5')
     r.set_f_params(K,omega)
     r.set_initial_value(x_0)
     X=x_0
     while r.t<timee:
-        theta=np.angle(1/float(N)*np.sum(np.exp(1.j*X)))  
+        theta=np.angle(1/float(N)*np.sum(np.exp(1.j*X)))
         R=np.abs(1/float(N)*np.sum(np.exp(1.j*X)))
         X=r.integrate(r.t+dt)
         Rresult=np.append(Rresult,R)
     Rresult=np.sum(Rresult)/(timee/dt)
     return Rresult
-    
+
 
 start = time.time()
 ########################################################
@@ -86,7 +79,7 @@ R=np.array([])
 omega=np.sort(np.random.normal(loc=1,scale=stdev,size=N))
 fig=plt.figure()
 for K in range(anzK):
-    R=np.append(R,Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt))    
+    R=np.append(R,Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt))
     Rresult=np.array([])
 x=np.linspace(0,1,anzK)
 plt.plot(x,R,'b.',ms=0.8)
@@ -106,7 +99,7 @@ R=np.array([])
 omega=np.sort(np.random.normal(loc=1,scale=stdev,size=N))
 fig=plt.figure()
 for K in range(anzK):
-    R=np.append(R,Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt))    
+    R=np.append(R,Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt))
     Rresult=np.array([])
 x=np.linspace(0,1,anzK)
 plt.plot(x,R,'b.',ms=0.8)
@@ -126,7 +119,7 @@ R=np.array([])
 omega=np.sort(np.random.normal(loc=1,scale=stdev,size=N))
 fig=plt.figure()
 for K in range(anzK):
-    R=np.append(R,Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt))    
+    R=np.append(R,Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt))
     Rresult=np.array([])
 x=np.linspace(0,1,anzK)
 plt.plot(x,R,'b.',ms=0.8)
@@ -148,7 +141,7 @@ R=np.array([])
 omega=np.sort(np.random.normal(loc=1,scale=stdev,size=N))
 fig=plt.figure()
 for K in range(anzK):
-    R=np.append(R,Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt))    
+    R=np.append(R,Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt))
     Rresult=np.array([])
 x=np.linspace(0,1,anzK)
 plt.plot(x,R,'b.',ms=0.8)
@@ -168,7 +161,7 @@ R=np.array([])
 omega=np.sort(np.random.normal(loc=1,scale=stdev,size=N))
 fig=plt.figure()
 for K in range(anzK):
-    R=np.append(R,Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt))    
+    R=np.append(R,Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt))
     Rresult=np.array([])
 x=np.linspace(0,1,anzK)
 plt.plot(x,R,'b.',ms=0.8)
@@ -188,7 +181,7 @@ R=np.array([])
 omega=np.sort(np.random.normal(loc=1,scale=stdev,size=N))
 fig=plt.figure()
 for K in range(anzK):
-    R=np.append(R,Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt))    
+    R=np.append(R,Rintegrieren(x_0,Rresult,K/float(anzK),omega,timee,dt))
     Rresult=np.array([])
 x=np.linspace(0,1,anzK)
 plt.plot(x,R,'b.',ms=0.8)
@@ -196,9 +189,6 @@ plt.title('N= '+str(N)+' , stdev= '+str(stdev))
 plt.xlabel('K')
 plt.ylabel('<R>')
 plt.savefig("stddev=0.2, N={}.png".format(N),dpi=400)
-
-
-
 
 
 #########Animation:
@@ -216,6 +206,3 @@ plt.savefig("stddev=0.2, N={}.png".format(N),dpi=400)
 ########################################################
 stop = time.time()
 print stop-start,'\t'
-
-
-    

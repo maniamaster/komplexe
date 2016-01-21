@@ -11,18 +11,18 @@ import numpy as np
 import time
 
 
-#Parameters:
-K=0.5
-iters=16
-anzx=25
-anzy=25
+# Parameters:
+K = 0.5
+iters = 16
+anzx = 25
+anzy = 25
 phaseiters=20
 
 #Map:
 def stand(X,K):
     return np.array([(X[0]+X[1])%1,
                      (X[1]+K/(2*np.pi)*np.sin(2*np.pi*(X[0]+X[1]))+1)%2-1])
-    
+
 def standback(X,K):
     return np.array([(X[0]-(X[1]-K/(2*np.pi)*np.sin(2*np.pi*(X[0]))))%1,
                      (X[1]-K/(2*np.pi)*np.sin(2*np.pi*(X[0]))+1)%2-1])
@@ -43,9 +43,9 @@ a=np.linspace(-10e-6,10e-6,2000)
 ##plot phase portrait:
 for i in range(anzx):
     for j in range(anzy):
-            x=np.array([i*1/float(anzx),j*1/float(anzy)])       
+            x=np.array([i*1/float(anzx),j*1/float(anzy)])
             for m in range(phaseiters):
-                x=stand(X=x,K=K) 
+                x=stand(X=x,K=K)
                 plt.plot(x[0],x[1],'k.',ms=0.3)
 
 ### plot mannigfaltigkeit
@@ -74,4 +74,4 @@ stop = time.time()
 print stop-start,'\t'
 
 
-    
+

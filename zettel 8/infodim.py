@@ -14,7 +14,7 @@ from scipy import stats
 
 #parameters:
 
-lim=500
+lim=10000
 N=100000
 ignore=99000
 
@@ -31,11 +31,11 @@ for i in range(lim):
     test1=hist
     hist=-hist*np.log2(hist)
     test2=hist
-    I[i]=np.nansum(hist)   
+    I[i]=np.nansum(hist)
     eps[i]=np.log2(1/float(epsilon))
-    
-slope, intercept, r_value, p_value, slope_std_error = stats.linregress(I, eps)   
-    
+
+slope, intercept, r_value, p_value, slope_std_error = stats.linregress(I, eps)
+
 #plt.plot(data[:,0],data[:,1],'b.',ms=0.1)
 plt.title('N='+str(N-ignore))
 x=np.linspace(0,100,1000)
